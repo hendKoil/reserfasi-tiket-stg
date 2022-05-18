@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.12.0.final using JasperReports Library version 6.12.1-ac0eebdb29e4c0985457bab279a6db744d661530  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reserfasi tiket" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f8d33e6f-952a-4b44-8e2a-99b046407f90">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter (2)"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="484"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="516"/>
+	<parameter name="Parameter1" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[$P{Parameter1}]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[select tb.film_name as filmName ,tb.nomor_tiket as nomorTiket, tb.harga_tiket as hargaTiket, tb.jam_mulai as jamMulai, tb.jam_selesai as jamSelesai, tb.tanggal_tayang as tanggalTayang, tb.username as userName, tb.no_seat as noSeat, tb.studio,tb.id_users as idUsers from vw_tiket_booking tb where tb.id_users  = $P{Parameter1}]]>
+	</queryString>
+	<field name="filmName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="filmName"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb"/>
+	</field>
+	<field name="nomorTiket" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="nomorTiket"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb"/>
+	</field>
+	<field name="hargaTiket" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="hargaTiket"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb"/>
+	</field>
+	<field name="jamMulai" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="jamMulai"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb"/>
+	</field>
+	<field name="jamSelesai" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="jamSelesai"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb"/>
+	</field>
+	<field name="tanggalTayang" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="tanggalTayang"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb"/>
+	</field>
+	<field name="userName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="userName"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb"/>
+	</field>
+	<field name="noSeat" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="noSeat"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb"/>
+	</field>
+	<field name="studio" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="studio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb"/>
+	</field>
+	<field name="idUsers" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="idUsers"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="49" splitType="Stretch">
+			<textField>
+				<reportElement x="480" y="0" width="80" height="30" uuid="1f99d6a4-f47e-47a6-b808-fbf388ff0920"/>
+				<textFieldExpression><![CDATA[$F{userName}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="29" width="80" height="30" uuid="5a0777cd-b8db-42fb-b978-3115d162d748">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ffb7d1b4-0ff1-47d6-ae15-c9510f31f5f2"/>
+				</reportElement>
+				<text><![CDATA[No Tiket]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="29" width="100" height="30" uuid="df330c03-d2e6-455b-8254-f69c6781ffff">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bea37c64-7f6a-40bd-9255-739a468ce611"/>
+				</reportElement>
+				<text><![CDATA[film_name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="29" width="100" height="30" uuid="2aeca6cc-2e4d-49b6-b0ab-87e4f63f4193">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="50e07a6e-2f64-413b-88d0-6371779b574b"/>
+				</reportElement>
+				<text><![CDATA[harga_tiket]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="29" width="100" height="30" uuid="febd7f65-d902-4df4-8dcd-76ef5a3752aa">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ee021db0-8eef-49f4-96fd-c2d4a886c9c1"/>
+				</reportElement>
+				<text><![CDATA[jam_mulai]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="29" width="100" height="30" uuid="2948631d-aa32-48b2-bddd-1363e3daedc6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="14374891-08fc-48a2-9600-1dbf44ea605f"/>
+				</reportElement>
+				<text><![CDATA[jam_selesai]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="480" y="29" width="80" height="30" uuid="2cb5af4b-b8a4-4768-9b92-19215ef7749f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="897d7400-5210-4efc-a1b7-4917eda66c7c"/>
+				</reportElement>
+				<text><![CDATA[tanggal_tayang]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="49" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="-2" width="80" height="30" uuid="582226a5-2dcd-4910-b273-e83f0c614eb2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="31687d62-238c-4eec-ab8d-9938122ba92c"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nomorTiket}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="0" width="80" height="30" uuid="3fbb5a83-7a83-4659-9f8e-52e18a898f64">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a87ae444-3d8b-4cb9-bb80-9b6ae4721700"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{hargaTiket}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="0" width="100" height="30" uuid="b094df2b-7c4f-4caf-b7eb-9a80ce8e83ee">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="46b9ba3a-a0d8-4ecc-ac92-4473be4d851d"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{filmName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="0" width="100" height="30" uuid="56b85c70-70c4-4a54-9858-30e11e167da4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5168631b-7485-421a-95d2-27ea6c5e0c26"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{jamMulai}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="-2" width="100" height="30" uuid="cc654d9f-7098-4177-9fd7-975eb20e631d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5b3a21d3-fbda-4e98-96c8-27479c9ee11a"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{jamSelesai}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="480" y="0" width="100" height="30" uuid="1c594130-dc29-4220-a058-5b2e469ef5a6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="38582df9-220f-4191-8060-950b23858e7a"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{tanggalTayang}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
