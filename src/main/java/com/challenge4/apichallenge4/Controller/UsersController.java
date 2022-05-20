@@ -4,6 +4,8 @@ import com.challenge4.apichallenge4.Dto.UsersDto;
 import com.challenge4.apichallenge4.Entity.Users;
 import com.challenge4.apichallenge4.Service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,9 +18,9 @@ public class UsersController {
     //RB Buat request body json
     //PV untuk url parameter (localhost:8081/api/pengeluaran/1)
     @PostMapping("api/users/submit")
-    public Users submit_controller(@RequestBody UsersDto usersDto){
-
-        return usersService.submit_users(usersDto);
+    public ResponseEntity<Object> submit_controller(@RequestBody UsersDto usersDto){
+        usersService.submit_users(usersDto);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
     @GetMapping("api/users")
     public List<Users> list_users_ctr(){

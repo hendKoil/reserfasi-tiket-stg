@@ -27,6 +27,10 @@ public class UsersService {
     @Autowired
     UsersRepo1 usersRepo1;
 
+    public UsersService(UsersRepo usersRepo) {
+        this.usersRepo = usersRepo;
+    }
+
 
     public Users submit_users(UsersDto usersDto){
         Users users = new Users();
