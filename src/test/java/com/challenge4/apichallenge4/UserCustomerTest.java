@@ -27,4 +27,5 @@ class UserCustomerTest {
         usersService.list_users();
         Mockito.verify(usersRepo).findAll();
     }
+
 }

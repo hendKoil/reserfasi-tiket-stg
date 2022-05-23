@@ -7,6 +7,7 @@ import com.challenge4.apichallenge4.Service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,20 +22,23 @@ import java.util.Collection;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class UserServiceImpl implements UserService, UserDetailsService {
-    private final UserLoginRepository userLoginRepository;
+public class UserServiceImpl implements  UserDetailsService {
+    @Autowired
+    private  UserLoginRepository userLoginRepository;
     private final PasswordEncoder passwordEncoder;
 
+
+
     private final Logger logger = LogManager.getLogger(UserServiceImpl.class);
-    @Override
+
     public UserLogin saveUser(UserLogin userLogin) {
         userLogin.setPassword(passwordEncoder.encode(userLogin.getPassword()));
         return userLoginRepository.save(userLogin);
     }
 
-    @Override
+
     public UserLogin findByUserName(String username) {
-        return null;
+        return userLoginRepository.findByUserName(username);
     }
 
     @Override
@@ -46,7 +50,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             logger.info(username+ "found .!");
         }
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-            user.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getRole())));
+        user.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getRole())));
         return new org.springframework.security.core.userdetails.
                 User(user.getUserName(), user.getPassword(), authorities);
     }
