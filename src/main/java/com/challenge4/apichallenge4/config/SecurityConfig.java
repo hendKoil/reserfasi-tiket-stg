@@ -62,21 +62,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
        http.csrf().disable();
-       //custom loginpage.
-//        RefreshToken refreshToken = new RefreshToken(authenticationManagerBean());
-//        refreshToken.setFilterProcessesUrl("/api/login");
        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/registration",
+        http.authorizeRequests().antMatchers("/login/**","/registration",
                 "/swagger-ui.html/**","/refresh-token").permitAll();
-//        http.authorizeRequests().antMatchers("/api/login/**").permitAll();
-        http.authorizeRequests().antMatchers("/login/**").permitAll();
        http.authorizeRequests().antMatchers("/api/**").hasAnyAuthority("ADMIN");
        http.authorizeRequests().anyRequest().authenticated();
-//       http.addFilter(refreshToken);
+
+//       customize ur url login
+        RefreshToken refreshToken = new RefreshToken(authenticationManagerBean());
+        refreshToken.setFilterProcessesUrl("/login-page");
+        http.addFilter(refreshToken);
+       //       customize ur url login
 
         //get get token from login endpoint to another endpoint
         http.addFilterBefore(new CustomAuthorFilter(), UsernamePasswordAuthenticationFilter.class);
-
         http.addFilter(new RefreshToken(authenticationManagerBean()));
     }
 

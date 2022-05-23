@@ -7,6 +7,7 @@ import com.challenge4.apichallenge4.Service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,12 +23,14 @@ import java.util.Collection;
 @RequiredArgsConstructor
 @Transactional
 public class UserServiceImpl implements  UserDetailsService {
-    private final UserLoginRepository userLoginRepository;
+    @Autowired
+    private  UserLoginRepository userLoginRepository;
     private final PasswordEncoder passwordEncoder;
 
     private final Logger logger = LogManager.getLogger(UserServiceImpl.class);
+
     public UserLogin saveUser(UserLogin userLogin) {
-        userLogin.setPassword(passwordEncoder.encode(userLogin.getPassword()));
+        userLogin.setPassword(passwordEncoder.encode(userLogin.getPassword()+"&^%^$@#23sdasd".getBytes().toString()));
         return userLoginRepository.save(userLogin);
     }
 

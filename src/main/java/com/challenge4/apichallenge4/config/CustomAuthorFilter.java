@@ -33,7 +33,7 @@ public class CustomAuthorFilter extends OncePerRequestFilter {
     Logger logger = LogManager.getLogger(CustomAuthorFilter.class);
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if(request.getServletPath().equalsIgnoreCase("/login") ||
+        if(request.getServletPath().equalsIgnoreCase("/login-page") ||
                 request.getServletPath().equalsIgnoreCase("/refresh-token")){
             filterChain.doFilter(request,response);
         }else{
