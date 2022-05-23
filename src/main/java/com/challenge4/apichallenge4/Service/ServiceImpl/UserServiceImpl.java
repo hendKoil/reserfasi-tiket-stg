@@ -21,20 +21,18 @@ import java.util.Collection;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements  UserDetailsService {
     private final UserLoginRepository userLoginRepository;
     private final PasswordEncoder passwordEncoder;
 
     private final Logger logger = LogManager.getLogger(UserServiceImpl.class);
-    @Override
     public UserLogin saveUser(UserLogin userLogin) {
         userLogin.setPassword(passwordEncoder.encode(userLogin.getPassword()));
         return userLoginRepository.save(userLogin);
     }
 
-    @Override
     public UserLogin findByUserName(String username) {
-        return null;
+        return userLoginRepository.findByUserName(username);
     }
 
     @Override
