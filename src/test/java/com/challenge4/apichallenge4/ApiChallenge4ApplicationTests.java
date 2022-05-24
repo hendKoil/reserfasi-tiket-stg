@@ -52,7 +52,7 @@ public class ApiChallenge4ApplicationTests {
                 .build();
     }
 
-    @WithMockUser("/submit-user-test-1")
+   
     @Test
     public void testSaveCustomer() throws Exception {
         UsersDto cusotmer = new UsersDto(1, "user8", "xxx@gmail.com", "mantul");
