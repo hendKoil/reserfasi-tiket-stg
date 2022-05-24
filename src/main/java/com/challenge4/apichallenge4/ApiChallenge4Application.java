@@ -18,9 +18,9 @@ public class ApiChallenge4Application {
 	public static void main(String[] args) {
 		SpringApplication.run(ApiChallenge4Application.class, args);
 	}
-//@Bean
-//	PasswordEncoder passwordEncoder(){
-//	return new BCryptPasswordEncoder();
-//}
+@Bean
+	PasswordEncoder passwordEncoder(){
+	return new BCryptPasswordEncoder();
+}
 
 }

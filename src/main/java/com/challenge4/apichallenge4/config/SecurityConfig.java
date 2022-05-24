@@ -33,52 +33,39 @@ import java.util.Collections;
 @EnableWebSecurity
 @RequiredArgsConstructor
 
-public class SecurityConfig extends WebSecurityConfigurerAdapter{
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    public  final UserDetailsService userDetailsService;
+    public final UserDetailsService userDetailsService;
 
-//    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     @Bean
-    public  BCryptPasswordEncoder bCryptPasswordEncoder(){
-     return new BCryptPasswordEncoder( );
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
-//    @Bean
-//    public PasswordEncoder encoder() {
-//        return new BCryptPasswordEncoder();
-//    }
-//
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-       auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
-//    @Bean
-//    public DaoAuthenticationProvider authProvider() {
-//        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-//        authProvider.setUserDetailsService(userDetailsService);
-//        authProvider.setPasswordEncoder(bCryptPasswordEncoder());
-//        return authProvider;
-//    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-       http.csrf().disable();
-       http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/login/**","/registration",
-                "/swagger-ui.html/**","/refresh-token").permitAll();
-       http.authorizeRequests().antMatchers("/api/**").hasAnyAuthority("ADMIN");
-       http.authorizeRequests().anyRequest().authenticated();
+        http.csrf().disable();
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.authorizeRequests().antMatchers("/login-page/**", "/registration",
+                "/swagger-ui.html/**", "/refresh-token").permitAll();
+        http.authorizeRequests().antMatchers("/api/**").hasAnyAuthority("ADMIN");
+        http.authorizeRequests().anyRequest().authenticated();
 
 //       customize ur url login
         RefreshToken refreshToken = new RefreshToken(authenticationManagerBean());
         refreshToken.setFilterProcessesUrl("/login-page");
         http.addFilter(refreshToken);
-       //       customize ur url login
+        //       customize ur url login
 
         //get get token from login endpoint to another endpoint
         http.addFilterBefore(new CustomAuthorFilter(), UsernamePasswordAuthenticationFilter.class);
         http.addFilter(new RefreshToken(authenticationManagerBean()));
     }
-
 
 
     @Bean
