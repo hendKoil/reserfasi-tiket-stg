@@ -6,6 +6,13 @@ public class UsersDto {
     private String email;
     private String password;
 
+    public UsersDto(int id_users, String username, String email, String password) {
+        this.id_users = id_users;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
     public int getId_users() {
         return id_users;
     }

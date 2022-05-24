@@ -11,6 +11,7 @@ import java.util.Set;
 @Table(name = "Users")
 @Setter
 @Getter
+
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +34,15 @@ public class Users {
 //    private List<Schedules> schedules;
 
 
+    public Users() {
+    }
+
+    public Users(int id_users, String username, String email, String password) {
+        this.id_users = id_users;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
 
     public int getId_users() {
         return id_users;

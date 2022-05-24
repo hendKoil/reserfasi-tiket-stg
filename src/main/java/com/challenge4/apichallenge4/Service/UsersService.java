@@ -32,13 +32,13 @@ public class UsersService {
     }
 
 
-    public Users submit_users(UsersDto usersDto){
+    public boolean submit_users(UsersDto usersDto){
         Users users = new Users();
         users.setUsername(usersDto.getUsername());
         users.setEmail(usersDto.getEmail());
         users.setPassword(usersDto.getPassword());
-
-        return usersRepo.save(users);
+        usersRepo.save(users);
+        return true;
     }
 
     public List<Users> list_users(){
