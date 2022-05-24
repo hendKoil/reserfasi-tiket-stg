@@ -24,13 +24,13 @@ import java.util.Collection;
 @Transactional
 public class UserServiceImpl implements  UserDetailsService {
     @Autowired
-    private  UserLoginRepository userLoginRepository;
-    private final PasswordEncoder passwordEncoder;
+    private  final UserLoginRepository userLoginRepository;
+    private  final PasswordEncoder passwordEncoder;
 
     private final Logger logger = LogManager.getLogger(UserServiceImpl.class);
 
     public UserLogin saveUser(UserLogin userLogin) {
-        userLogin.setPassword(passwordEncoder.encode(userLogin.getPassword()+"&^%^$@#23sdasd".getBytes().toString()));
+        userLogin.setPassword(passwordEncoder.encode(userLogin.getPassword()+"%$*!rw12".getBytes()));
         return userLoginRepository.save(userLogin);
     }
 
@@ -47,7 +47,7 @@ public class UserServiceImpl implements  UserDetailsService {
             logger.info(username+ "found .!");
         }
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-            user.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getRole())));
+        user.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getRole())));
         return new org.springframework.security.core.userdetails.
                 User(user.getUserName(), user.getPassword(), authorities);
     }

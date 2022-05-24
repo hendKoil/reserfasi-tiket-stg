@@ -35,7 +35,7 @@ import java.util.Collections;
 
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
-    public final UserDetailsService userDetailsService;
+    public  final UserDetailsService userDetailsService;
 
 //    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     @Bean
