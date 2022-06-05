@@ -184,6 +184,7 @@
 			</plugin>
 
 		</plugins>
+		<finalName>api-reserfasi-tiket</finalName>
 	</build>
 
 </project>
