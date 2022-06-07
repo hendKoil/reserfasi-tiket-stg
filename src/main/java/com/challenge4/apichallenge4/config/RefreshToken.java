@@ -53,6 +53,8 @@ public class RefreshToken extends UsernamePasswordAuthenticationFilter {
         Map<String, String> map = new HashMap<>();
         map.put("access_token", accessToken);
         map.put("refresh_token", refreshToken);
+        System.out.println("access_token "+accessToken);
+
         response.setContentType(APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(response.getOutputStream(), map);
     }
