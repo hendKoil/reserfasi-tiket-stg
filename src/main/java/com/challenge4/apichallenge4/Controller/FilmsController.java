@@ -23,8 +23,7 @@ import java.util.Map;
 public class FilmsController {
     @Autowired
     FilmService filmService;
-    @Autowired
-    FilmsRepo filmsRepo;
+
 
 //    @PostMapping("api/films")
 //    public ResponseEntity<?> submit_film_ctr(@RequestBody FilmsDto filmsDto){
@@ -51,6 +50,7 @@ public class FilmsController {
     @GetMapping("api/films/all")
     public List<Films> getAllFilm(){
 
-        return filmsRepo.findAll();
+        return filmService.getAllFilms();
     }
+
 }
