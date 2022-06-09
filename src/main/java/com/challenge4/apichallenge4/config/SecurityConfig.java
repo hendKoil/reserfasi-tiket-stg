@@ -53,7 +53,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/login-page/**", "/registration",
                 "/swagger-ui.html/**", "/refresh-token").permitAll();
-        http.authorizeRequests().antMatchers("/api/**").hasAnyAuthority("ADMIN");
+        http.authorizeRequests().antMatchers("/api/films/all").hasAnyAuthority("BUYER")
+                .and().authorizeRequests().antMatchers("/api/films")
+                .hasAnyAuthority("SELLER");
         http.authorizeRequests().anyRequest().authenticated();
 
 //       customize ur url login
