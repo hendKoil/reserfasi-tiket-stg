@@ -31,7 +31,7 @@ public class UserServiceImpl implements  UserDetailsService {
     private final Logger logger = LogManager.getLogger(UserServiceImpl.class);
 
     public UserLogin saveUser(UserLogin userLogin) {
-        userLogin.setPassword(passwordEncoder.encode(userLogin.getPassword()+"%$*!rw12".getBytes()));
+        userLogin.setPassword(passwordEncoder.encode(userLogin.getPassword()));
         return userLoginRepository.save(userLogin);
     }
 
