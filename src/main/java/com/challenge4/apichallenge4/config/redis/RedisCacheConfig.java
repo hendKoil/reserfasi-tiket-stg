@@ -30,9 +30,11 @@ public class RedisCacheConfig {
 
     private CacheManager cacheManager;
 
-    private String redisHost = "127.0.0.1";
+    @Value("${spring.redis.host}")
+    private String redisHost;
 
-    private int redisPort = 6379;
+    @Value("${spring.redis.port}")
+    private int redisPort;
 
     @Bean
     public RedisTemplate<String, Serializable> redisCacheTemplate(LettuceConnectionFactory redisConnectionFactory) {
@@ -55,11 +57,11 @@ public class RedisCacheConfig {
                 .build();
         return redisCacheManager;
     }
-    @PostConstruct
-    public void clearCache() {
-        System.out.println("In Clear Cache");
-        Jedis jedis = new Jedis(redisHost, redisPort, 1000);
-        jedis.flushAll();
-        jedis.close();
-    }
+//    @PostConstruct
+//    public void clearCache() {
+//        System.out.println("In Clear Cache");
+//        Jedis jedis = new Jedis(redisHost, redisPort, 1000);
+//        jedis.flushAll();
+//        jedis.close();
+//    }
 }

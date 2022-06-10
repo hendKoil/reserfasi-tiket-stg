@@ -7,6 +7,7 @@ services:
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
       - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+
   app:
     container_name: app-reserfasi-tiket
     image: app-reserfasi-tiket
@@ -15,6 +16,7 @@ services:
       - "8081:8081"
     depends_on:
       - dbPostgre
+      - cache
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://dbPostgre:5432/reserfasi_tiket
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
@@ -23,6 +25,8 @@ services:
       - LOGGING_LEVEL_ORG_HIBERNATE_SQL=DEBUG
       - LOGGING_LEVEL_ORG_HIBERNATE_TYPE_DESCRIPTOR_SQL_BASICBINDER=TRACE
       - LOGGING_EVEL_ORG_SPRINGFRAMEWORK=DEBUG
+      - SPRING_REDIS_HOST:cache
+      - SPRING_REDIS_PORT:6379
   dbPostgre:
       image: postgres
       ports:
