@@ -20,17 +20,12 @@ public class FilmService {
     @Autowired
     FilmsRepo filmsRepo;
 
-//    private final String hashReference= "film";
-
-//    @Resource(name="redisTemplate")          // 'redisTemplate' is defined as a Bean in redisConfigClass.java
-//    private HashOperations<String, Integer, Films> hashOperations;
 
     @CacheEvict(cacheNames = "films", allEntries = true)
     public Films submit_films(FilmsDto filmsDto) {
         Films save = new Films(filmsDto.getFilm_name(), filmsDto.isShowFilm());
         System.out.println(save.getFilmCode());
         filmsRepo.save(save);
-//        hashOperations.putIfAbsent(hashReference,save.getFilmCode(),save);
         return save;
     }
 
@@ -44,7 +39,6 @@ public class FilmService {
     public List<Films> getAllFilms(){
         waitSomeTime();
         List<Films> films = filmsRepo.findAll();
-//        hashOperations.entries(hashReference);
         return films;
     }
     private void waitSomeTime() {
