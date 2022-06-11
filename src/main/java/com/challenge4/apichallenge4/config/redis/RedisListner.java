@@ -14,10 +14,10 @@ private CacheManager cacheManager;
 
 @Override
 public final void onApplicationEvent(ContextRefreshedEvent event) {
-        System.out.println("On Application Event is OK");
+        System.out.println("Start..!");
         cacheManager.getCacheNames().parallelStream().forEach(n -> {
         // cacheManager.getCache(n).clear()
-        System.out.println("kinculp "+n);
+        System.out.println("kinclup "+n);
         });
         }
 

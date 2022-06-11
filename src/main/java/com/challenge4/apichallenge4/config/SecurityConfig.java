@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/swagger-ui.html/**", "/refresh-token").permitAll();
         http.authorizeRequests().antMatchers("/api/films").hasAnyAuthority("SELLER")
                 
-                .and().authorizeRequests().antMatchers("/api/films/all").hasAnyAuthority("BUYER");
+                .and().authorizeRequests().antMatchers("/api/films/all", "api/films/all/{page}/{size}").hasAnyAuthority("BUYER");
         http.authorizeRequests().anyRequest().authenticated();
 
 //       customize ur url login

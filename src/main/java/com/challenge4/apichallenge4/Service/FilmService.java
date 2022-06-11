@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +35,9 @@ public class FilmService {
         Films save = submit_films(filmsDto);
 
         return save.getFilmCode();
+    }
+    public Page<Films> filmSorting(Pageable pageable){
+        return filmsRepo.findAll(pageable);
     }
 
     @Cacheable(cacheNames = "films")

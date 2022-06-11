@@ -8,12 +8,12 @@ import com.challenge4.apichallenge4.Repository.FilmsRepo;
 import com.challenge4.apichallenge4.Service.FilmService;
 import com.challenge4.apichallenge4.Service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +51,17 @@ public class FilmsController {
     public List<Films> getAllFilm(){
 
         return filmService.getAllFilms();
+    }
+    @PostMapping("api/films/all/{page}/{size}")
+    public Map<String, Object> filmPaging(@PathVariable("page") int page, @PathVariable("size") int size){
+        Pageable pageable = PageRequest.of(page,size);
+        Page<Films> data = filmService.filmSorting(pageable);
+        Map<String, Object> map = new HashMap<>();
+        map.put("page size",size);
+        map.put("rowCount", data.getTotalElements());
+        map.put("page", pageable.getPageNumber());
+        map.put("data", data.getContent());
+        return map;
     }
 
 }
