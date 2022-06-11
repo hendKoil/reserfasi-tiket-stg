@@ -57,11 +57,11 @@ public class RedisCacheConfig {
                 .build();
         return redisCacheManager;
     }
-//    @PostConstruct
-//    public void clearCache() {
-//        System.out.println("In Clear Cache");
-//        Jedis jedis = new Jedis(redisHost, redisPort, 1000);
-//        jedis.flushAll();
-//        jedis.close();
-//    }
+    @PostConstruct
+    public void clearCache() {
+        System.out.println("In Clear Cache");
+        Jedis jedis = new Jedis(redisHost, redisPort, 86400000);
+        jedis.flushAll();
+        jedis.close();
+    }
 }
