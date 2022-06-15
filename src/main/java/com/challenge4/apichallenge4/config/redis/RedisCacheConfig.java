@@ -37,26 +37,20 @@ public class RedisCacheConfig {
     private int redisPort;
 
     @Bean
-    public RedisTemplate<String, Serializable> redisCacheTemplate(LettuceConnectionFactory redisConnectionFactory) {
-        RedisTemplate<String, Serializable> template = new RedisTemplate<>();
-        template.setKeySerializer(new StringRedisSerializer());
-        template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
-        template.setConnectionFactory(redisConnectionFactory);
-        return template;
+    public RedisCacheConfiguration cacheConfiguration(){
+        return RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(1))
+                .disableCachingNullValues().serializeValuesWith(RedisSerializationContext
+                        .SerializationPair
+                        .fromSerializer(new GenericJackson2JsonRedisSerializer()));
     }
 
     @Bean
-    public CacheManager cacheManager(RedisConnectionFactory factory) {
-        RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig();
-        RedisCacheConfiguration redisCacheConfiguration = config
-                .serializeKeysWith(
-                        RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
-                .serializeValuesWith(RedisSerializationContext.SerializationPair
-                        .fromSerializer(new GenericJackson2JsonRedisSerializer()));
-        RedisCacheManager redisCacheManager = RedisCacheManager.builder(factory).cacheDefaults(redisCacheConfiguration)
-                .build();
-        return redisCacheManager;
+    public RedisCacheManagerBuilderCustomizer redisCacheManagerBuilderCustomizer(){
+        return (builder) -> builder.withCacheConfiguration("films", RedisCacheConfiguration
+                .defaultCacheConfig()
+                .entryTtl(Duration.ofMinutes(5)));
     }
+
     @PostConstruct
     public void clearCache() {
         System.out.println("In Clear Cache");

@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.challenge4.apichallenge4.Dto.UserLoginDto;
 import com.challenge4.apichallenge4.Entity.Role;
 import com.challenge4.apichallenge4.Entity.UserLogin;
 
@@ -37,15 +38,15 @@ public class LoginController {
     UserServiceImpl UserServiceImpl;
 
     @PostMapping(value = "/registration")
-    public ResponseEntity<?> createNewUser(@RequestBody UserLogin user) {
+    public ResponseEntity<?> createNewUser(@RequestBody UserLoginDto user) throws IOException {
         Map<UserLogin, String> map = new HashMap<>();
         UserLogin userExists = UserServiceImpl.findByUserName(user.getUserName());
-        if (userExists != null) {
-            map.put(userExists, "userName error.user already exist!");
-            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
-        } else {
+//        if (userExists != null) {
+//            map.put(userExists, "userName error.user already exist!");
+//            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+//        } else {
             UserServiceImpl.saveUser(user);
-        }
+//        }
         return new ResponseEntity<>(map, HttpStatus.CREATED);
     }
 

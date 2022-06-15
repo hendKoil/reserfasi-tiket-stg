@@ -2,6 +2,7 @@
 package com.challenge4.apichallenge4.Service.ServiceImpl;
 
 import com.challenge4.apichallenge4.Controller.OrderController;
+import com.challenge4.apichallenge4.Dto.UserLoginDto;
 import com.challenge4.apichallenge4.Entity.UserLogin;
 import com.challenge4.apichallenge4.Repository.UserLoginRepository;
 import com.challenge4.apichallenge4.Service.UserService;
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -30,9 +32,18 @@ public class UserServiceImpl implements  UserDetailsService {
 
     private final Logger logger = LogManager.getLogger(UserServiceImpl.class);
 
-    public UserLogin saveUser(UserLogin userLogin) {
-        userLogin.setPassword(passwordEncoder.encode(userLogin.getPassword()));
-        return userLoginRepository.save(userLogin);
+    public UserLogin saveUser(UserLoginDto userLogin) throws IOException {
+        UserLogin save = new UserLogin();
+        save.setRoles(userLogin.getRoles());
+        save.setActive(userLogin.getActive());
+        save.setName(userLogin.getName());
+        save.setUserName(userLogin.getUserName());
+        save.setLastName(userLogin.getLastName());
+        save.setEmail(userLogin.getEmail());
+        save.setImg(userLogin.getImg().getBytes());
+        save.setPassword(passwordEncoder.encode(userLogin.getPassword()));
+
+        return userLoginRepository.save(save);
     }
 
     public UserLogin findByUserName(String username) {
