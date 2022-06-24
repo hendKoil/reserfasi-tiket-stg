@@ -13,8 +13,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +26,11 @@ import java.util.Map;
 public class FilmsController {
     @Autowired
     FilmService filmService;
+
+   public Authentication authentication(){
+       Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+       return auth;
+   }
 
 
 //    @PostMapping("api/films")
@@ -33,6 +41,12 @@ public class FilmsController {
 //
 //        return new ResponseEntity<>(map, HttpStatus.ACCEPTED);
 //    }
+
+    @PostMapping("api/test/film/")
+    public void test(@RequestParam("var1") String var1){
+//         authentication.getPrincipal();
+        System.out.println(authentication().getPrincipal()+var1);
+    }
 
     @PostMapping("api/films") //customize response by dto
     public Map<String, Object> submit_film_ctr(@RequestBody FilmsDto filmsDto){
@@ -48,9 +62,11 @@ public class FilmsController {
     }
 
     @GetMapping("api/films/all")
-    public List<Films> getAllFilm(){
-
-        return filmService.getAllFilms();
+    public Map<String, Object> getAllFilm(){
+        Map<String, Object> map = new HashMap<>();
+//        map.put("data_film", filmService.getAllFilms());
+        System.out.println("pantek "+authentication().getPrincipal().toString());
+        return map;
     }
     @PostMapping("api/films/all/{page}/{size}")
     public Map<String, Object> filmPaging(@PathVariable("page") int page, @PathVariable("size") int size){

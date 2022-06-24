@@ -16,10 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,9 +35,10 @@ public class LoginController {
     @Autowired
     UserServiceImpl UserServiceImpl;
 
-    @PostMapping(value = "/registration")
-    public ResponseEntity<?> createNewUser(@RequestBody UserLoginDto user) throws IOException {
+    @PostMapping(value = "/registration/")
+    public ResponseEntity<?> createNewUser(UserLoginDto user, @RequestParam("image")MultipartFile file) throws IOException {
         Map<UserLogin, String> map = new HashMap<>();
+        user.setImg(file);
         UserLogin userExists = UserServiceImpl.findByUserName(user.getUserName());
 //        if (userExists != null) {
 //            map.put(userExists, "userName error.user already exist!");
@@ -48,6 +47,18 @@ public class LoginController {
             UserServiceImpl.saveUser(user);
 //        }
         return new ResponseEntity<>(map, HttpStatus.CREATED);
+    }
+    @GetMapping(value = "/profile/{username}")
+    public ResponseEntity<?> getUserProfile(@RequestParam("username")String username) throws IOException {
+        Map<UserLogin, String> map = new HashMap<>();
+
+        UserLogin userExists = UserServiceImpl.findByUserName(username);
+//        if (userExists != null) {
+//            map.put(userExists, "userName error.user already exist!");
+//            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+//        } else {
+//        }
+        return new ResponseEntity<>(userExists, HttpStatus.CREATED);
     }
 
     @GetMapping("/refresh-token")

@@ -4,6 +4,7 @@ package com.challenge4.apichallenge4.config;
 import com.challenge4.apichallenge4.Entity.Role;
 import com.challenge4.apichallenge4.Entity.UserLogin;
 import com.challenge4.apichallenge4.Repository.UserLoginRepository;
+import com.challenge4.apichallenge4.Service.ServiceImpl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -37,7 +38,7 @@ import java.util.Collections;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     public final UserDetailsService userDetailsService;
-
+    public final UserServiceImpl userServiceImpl;
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
@@ -51,8 +52,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/login-page/**", "/registration",
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
+        http.authorizeRequests().antMatchers("/login-page/**", "/registration","/registration/",
+                "/profile/{username}",
                 "/swagger-ui.html/**", "/refresh-token").permitAll();
         http.authorizeRequests().antMatchers("/api/films").hasAnyAuthority("SELLER")
                 
@@ -60,14 +62,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().anyRequest().authenticated();
 
 //       customize ur url login
-        RefreshToken refreshToken = new RefreshToken(authenticationManagerBean());
+        RefreshToken refreshToken = new RefreshToken(authenticationManagerBean(), userServiceImpl);
         refreshToken.setFilterProcessesUrl("/login-page");
         http.addFilter(refreshToken);
         //       customize ur url login
 
         //get get token from login endpoint to another endpoint
         http.addFilterBefore(new CustomAuthorFilter(), UsernamePasswordAuthenticationFilter.class);
-        http.addFilter(new RefreshToken(authenticationManagerBean()));
+        http.addFilter(new RefreshToken(authenticationManagerBean(),userServiceImpl));
     }
 
 

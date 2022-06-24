@@ -2,6 +2,8 @@ package com.challenge4.apichallenge4.config;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.challenge4.apichallenge4.Service.ServiceImpl.UserServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
@@ -28,9 +30,10 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 public class RefreshToken extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
-
-    public RefreshToken(AuthenticationManager authenticationManager) {
+    private final UserServiceImpl userServiceImpl;
+    public RefreshToken(AuthenticationManager authenticationManager, UserServiceImpl userServiceImpl ) {
         this.authenticationManager = authenticationManager;
+        this.userServiceImpl = userServiceImpl;
     }
 
     @Override
@@ -50,7 +53,8 @@ public class RefreshToken extends UsernamePasswordAuthenticationFilter {
                 .withIssuer(request.getRequestURL().toString())
                 .sign(algorithm);
 
-        Map<String, String> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
+        map.put("user", userServiceImpl.findByUserName(user.getUsername()).getId());
         map.put("access_token", accessToken);
         map.put("refresh_token", refreshToken);
         System.out.println("access_token "+accessToken);
